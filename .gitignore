@@ -1,3 +1,4 @@
 # Miscellaneous
 __pycache__
 .vscode
+secrets.py
