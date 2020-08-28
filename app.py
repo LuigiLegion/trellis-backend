@@ -42,6 +42,41 @@ def reset_database():
     print("Database reset successfully!")
 
 
+@app.cli.command("seeddb")
+def seed_database():
+    """ Seeds database with dummy data. """
+
+    def seed_table(table, data):
+        """ Seeds table with dummy data. """
+
+        print(f"Seeding {table} table...")
+
+        for datum in data:
+            db.session.add(datum)
+
+        db.session.commit()
+
+    boards = [Board(title="Projects")]
+    seed_table("Board", boards)
+
+    lists = [
+        List(title="Backlog", board_id=1),
+        List(title="Ongoing", board_id=1),
+        List(title="Completed", board_id=1),
+    ]
+    seed_table("List", lists)
+
+    cards = [
+        Card(title="Go project", list_id=1),
+        Card(title="Python project", list_id=2),
+        Card(title="TypeScript project", list_id=2),
+        Card(title="JavaScript project", list_id=3),
+    ]
+    seed_table("Card", cards)
+
+    print("Database seeded successfully!")
+
+
 # Models
 class Board(db.Model):
     id = db.Column(db.Integer, primary_key=True)
