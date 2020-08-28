@@ -24,8 +24,8 @@ db = SQLAlchemy(app)
 
 
 @app.cli.command("resetdb")
-def reset_db():
-    """ Destroys and creates database and tables. """
+def reset_database():
+    """ Drops and recreates database and tables. """
 
     if database_exists(DATABASE_URI):
         print("Dropping database...")
@@ -36,8 +36,10 @@ def reset_db():
         create_database(DATABASE_URI)
 
     print("Creating tables...")
+
     db.create_all()
-    print("Tables created successfully!")
+
+    print("Database reset successfully!")
 
 
 # Models
