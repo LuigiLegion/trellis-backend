@@ -45,15 +45,21 @@ class Board(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(25), nullable=False, unique=True)
 
+    lists = db.relationship("List", backref="lists_board")
+
 
 class List(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False, unique=True)
+    board_id = db.Column(db.Integer, db.ForeignKey("board.id"), nullable=False)
+
+    lists = db.relationship("Card", backref="cards_list")
 
 
 class Card(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250), nullable=False)
+    list_id = db.Column(db.Integer, db.ForeignKey("list.id"), nullable=False)
 
 
 # Run server
